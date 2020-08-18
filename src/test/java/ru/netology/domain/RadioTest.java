@@ -1,7 +1,5 @@
 package ru.netology.domain;
-
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
@@ -22,6 +20,7 @@ class RadioTest {
         radio.setCurrentStation(-1);
         assertEquals(0, radio.getCurrentStation());
     }
+
     @Test
     public void shouldNotSetOverMaxStation() {
         Radio radio = new Radio();
@@ -71,4 +70,70 @@ class RadioTest {
         assertEquals(9, radio.getCurrentStation());
     }
 
+    @Test
+    public void shouldSetCurrentVolume() {
+        Radio radio = new Radio();
+        radio.setMinVolume(0);
+        radio.setMaxVolume(10);
+        radio.setCurrentVolume(5);
+        assertEquals(5, radio.getCurrentVolume());
+    }
+
+    @Test
+    public void shouldNotSetBelowMinVolume() {
+        Radio radio = new Radio();
+        radio.setMinVolume(0);
+        radio.setMaxVolume(10);
+        radio.setCurrentVolume(-2);
+        assertEquals(0, radio.getCurrentVolume());
+    }
+
+    @Test
+    public void shouldNotSetOverMaxVolume() {
+        Radio radio = new Radio();
+        radio.setMinVolume(0);
+        radio.setMaxVolume(10);
+        radio.setCurrentVolume(12);
+        assertEquals(0, radio.getCurrentVolume());
+    }
+
+    @Test
+    public void shouldIncreaseVolume() {
+        Radio radio = new Radio();
+        radio.setMinVolume(0);
+        radio.setMaxVolume(10);
+        radio.setCurrentVolume(8);
+        radio.increaseVolume();
+        assertEquals(9, radio.getCurrentVolume());
+    }
+
+    @Test
+    public void shouldDecreaseVolume() {
+        Radio radio = new Radio();
+        radio.setMinVolume(0);
+        radio.setMaxVolume(10);
+        radio.setCurrentVolume(4);
+        radio.decreaseVolume();
+        assertEquals(3, radio.getCurrentVolume());
+    }
+
+    @Test
+    public void shouldNotDecreaseBelowMinVolume() {
+        Radio radio = new Radio();
+        radio.setMinVolume(0);
+        radio.setMaxVolume(10);
+        radio.setCurrentVolume(0);
+        radio.decreaseVolume();
+        assertEquals(0, radio.getCurrentVolume());
+    }
+
+    @Test
+    public void shouldNotIncreaseOverMaxVolume() {
+        Radio radio = new Radio();
+        radio.setMinVolume(0);
+        radio.setMaxVolume(10);
+        radio.setCurrentVolume(10);
+        radio.increaseVolume();
+        assertEquals(10, radio.getCurrentVolume());
+    }
 }
