@@ -3,38 +3,31 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
+
+    Radio radio = new Radio(
+            19
+    );
+
     @Test
     public void shouldSetCurrentStation() {
-        Radio radio = new Radio();
-        radio.setMinStation(0);
-        radio.setMaxStation(9);
         radio.setCurrentStation(5);
         assertEquals(5, radio.getCurrentStation());
     }
 
     @Test
     public void shouldNotSetBelowMinStation() {
-        Radio radio = new Radio();
-        radio.setMinStation(0);
-        radio.setMaxStation(9);
         radio.setCurrentStation(-1);
         assertEquals(0, radio.getCurrentStation());
     }
 
     @Test
     public void shouldNotSetOverMaxStation() {
-        Radio radio = new Radio();
-        radio.setMinStation(0);
-        radio.setMaxStation(9);
-        radio.setCurrentStation(10);
+        radio.setCurrentStation(20);
         assertEquals(0, radio.getCurrentStation());
     }
 
     @Test
     public void shouldSwitchNextStation() {
-        Radio radio = new Radio();
-        radio.setMinStation(0);
-        radio.setMaxStation(9);
         radio.setCurrentStation(7);
         radio.nextStation();
         assertEquals(8, radio.getCurrentStation());
@@ -42,9 +35,6 @@ class RadioTest {
 
     @Test
     public void shouldSwitchPreviousStation() {
-        Radio radio = new Radio();
-        radio.setMinStation(0);
-        radio.setMaxStation(9);
         radio.setCurrentStation(4);
         radio.previousStation();
         assertEquals(3, radio.getCurrentStation());
@@ -52,88 +42,59 @@ class RadioTest {
 
     @Test
     public void shouldSwitchLastStationToFirst() {
-        Radio radio = new Radio();
-        radio.setMinStation(0);
-        radio.setMaxStation(9);
-        radio.setCurrentStation(9);
+        radio.setCurrentStation(radio.getMaxStation());
         radio.nextStation();
         assertEquals(0, radio.getCurrentStation());
     }
 
     @Test
     public void shouldSwitchFirstStationToLast() {
-        Radio radio = new Radio();
-        radio.setMinStation(0);
-        radio.setMaxStation(9);
-        radio.setCurrentStation(0);
         radio.previousStation();
-        assertEquals(9, radio.getCurrentStation());
+        assertEquals(radio.getMaxStation(), radio.getCurrentStation());
     }
 
     @Test
     public void shouldSetCurrentVolume() {
-        Radio radio = new Radio();
-        radio.setMinVolume(0);
-        radio.setMaxVolume(10);
-        radio.setCurrentVolume(5);
-        assertEquals(5, radio.getCurrentVolume());
+        radio.setCurrentVolume(50);
+        assertEquals(50, radio.getCurrentVolume());
     }
 
     @Test
     public void shouldNotSetBelowMinVolume() {
-        Radio radio = new Radio();
-        radio.setMinVolume(0);
-        radio.setMaxVolume(10);
-        radio.setCurrentVolume(-2);
+        radio.setCurrentVolume(-20);
         assertEquals(0, radio.getCurrentVolume());
     }
 
     @Test
     public void shouldNotSetOverMaxVolume() {
-        Radio radio = new Radio();
-        radio.setMinVolume(0);
-        radio.setMaxVolume(10);
-        radio.setCurrentVolume(12);
+        radio.setCurrentVolume(110);
         assertEquals(0, radio.getCurrentVolume());
     }
 
     @Test
     public void shouldIncreaseVolume() {
-        Radio radio = new Radio();
-        radio.setMinVolume(0);
-        radio.setMaxVolume(10);
-        radio.setCurrentVolume(8);
+        radio.setCurrentVolume(60);
         radio.increaseVolume();
-        assertEquals(9, radio.getCurrentVolume());
+        assertEquals(61, radio.getCurrentVolume());
     }
 
     @Test
     public void shouldDecreaseVolume() {
-        Radio radio = new Radio();
-        radio.setMinVolume(0);
-        radio.setMaxVolume(10);
-        radio.setCurrentVolume(4);
+        radio.setCurrentVolume(100);
         radio.decreaseVolume();
-        assertEquals(3, radio.getCurrentVolume());
+        assertEquals(99, radio.getCurrentVolume());
     }
 
     @Test
     public void shouldNotDecreaseBelowMinVolume() {
-        Radio radio = new Radio();
-        radio.setMinVolume(0);
-        radio.setMaxVolume(10);
-        radio.setCurrentVolume(0);
         radio.decreaseVolume();
         assertEquals(0, radio.getCurrentVolume());
     }
 
     @Test
     public void shouldNotIncreaseOverMaxVolume() {
-        Radio radio = new Radio();
-        radio.setMinVolume(0);
-        radio.setMaxVolume(10);
-        radio.setCurrentVolume(10);
+        radio.setCurrentVolume(radio.getMaxVolume());
         radio.increaseVolume();
-        assertEquals(10, radio.getCurrentVolume());
+        assertEquals(100, radio.getCurrentVolume());
     }
 }
