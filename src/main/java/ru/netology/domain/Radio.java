@@ -1,8 +1,10 @@
 package ru.netology.domain;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
+@Data
 public class Radio {
     private int currentStation;
     private int minStation = 0;
